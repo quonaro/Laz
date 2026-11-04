@@ -55,3 +55,10 @@ completion:
   native: true
   args:
   - shell:str
+
+update:
+  desc: Update laz to the latest GitHub release
+  color: white
+  native: true
+  args:
+  - check|c:bool=false

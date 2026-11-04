@@ -27,6 +27,7 @@ func main() {
 	builder.RegisterNative("frpc", runFRPCFetch)
 	builder.RegisterNative("version", showVersion)
 	builder.RegisterNative("completion", runCompletion)
+	builder.RegisterNative("update", runUpdate)
 	builder.WithOptions(engine.Options{AutoHelp: true})
 
 	app, err := builder.Build()
