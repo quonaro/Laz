@@ -1,0 +1,32 @@
+vars:
+- GO_LDFLAGS=-s -w -X main.version=$(git describe --tags --always --dirty 2>/dev/null || echo dev) -X main.commit=$(git rev-parse --short HEAD 2>/dev/null || echo unknown)
+
+build:
+  desc: Build laz binaries
+  local:
+    desc: Build for the current platform
+    script: |
+      set -euo pipefail
+      CGO_ENABLED=0 go build -trimpath -ldflags="$GO_LDFLAGS" -o laz ./cmd/laz
+  all:
+    desc: Cross-compile release assets into dist/
+    script: |
+      set -euo pipefail
+      mkdir -p dist
+      for t in linux-amd64 linux-arm64 darwin-amd64 darwin-arm64; do
+        GOOS="${t%-*}" GOARCH="${t#*-}" CGO_ENABLED=0 go build -trimpath \
+          -ldflags="$GO_LDFLAGS" -o "dist/laz-$t" ./cmd/laz
+      done
+
+dev:
+  desc: Run laz from source
+  script: go run ./cmd/laz
+
+push:
+  desc: Push to GitHub
+  args:
+  - tag|t:str?
+  script: |
+    set -euo pipefail
+    git push
+    [ -n "${tag:-}" ] && git push -f origin "$tag" || true

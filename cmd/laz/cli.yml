@@ -1,0 +1,47 @@
+http:
+  desc: Expose a local HTTP service on a public subdomain
+  color: green
+  native: true
+  args:
+  - port:int
+  - subdomain|s:str?
+  - host|H:str=127.0.0.1
+  - ttl|t:str?
+  - server:str?
+  - token:str?
+
+tcp:
+  desc: Expose a local TCP port on a remote port
+  color: green
+  native: true
+  args:
+  - port:int
+  - remote|r:int?
+  - host|H:str=127.0.0.1
+  - ttl|t:str?
+  - server:str?
+  - token:str?
+
+udp:
+  desc: Expose a local UDP port on a remote port
+  color: green
+  native: true
+  args:
+  - port:int
+  - remote|r:int?
+  - host|H:str=127.0.0.1
+  - ttl|t:str?
+  - server:str?
+  - token:str?
+
+frpc:
+  desc: Download or update the pinned frpc binary
+  color: white
+  native: true
+  args:
+  - version|v:str?
+
+version:
+  desc: Show version
+  color: white
+  native: true
