@@ -80,8 +80,6 @@ func runShare(ctx context.Context, nctx engine.NativeContext) error {
 		SecretKey: key,
 	}
 	applyCommon(&p, nctx)
-	fmt.Fprintf(nctx.Stdout, "share name: %s\nsecret key: %s\nvisit: laz visit %s -k %s -y %s -b 127.0.0.1:<port>\n",
-		name, key, name, key, typ)
 	return run(ctx, nctx, frpc.ClientConfig{Proxies: []frpc.Proxy{p}}, nil)
 }
 
@@ -103,7 +101,6 @@ func runVisit(ctx context.Context, nctx engine.NativeContext) error {
 		ServerName: nctx.Args["name"], SecretKey: nctx.Args["key"],
 		BindAddr: bindHost, BindPort: bindPort,
 	}
-	fmt.Fprintf(nctx.Stdout, "visiting %s at %s:%d\n", v.ServerName, bindHost, bindPort)
 	return run(ctx, nctx, frpc.ClientConfig{Visitors: []frpc.Visitor{v}}, nil)
 }
 
@@ -115,8 +112,6 @@ func runXTCP(ctx context.Context, nctx engine.NativeContext) error {
 		LocalIP: "127.0.0.1", LocalPort: nctx.Args["port"],
 		SecretKey: key,
 	}
-	fmt.Fprintf(nctx.Stdout, "xtcp name: %s\nsecret key: %s\npeer: laz visit %s -k %s -y xtcp\n",
-		name, key, name, key)
 	return run(ctx, nctx, frpc.ClientConfig{Proxies: []frpc.Proxy{p}}, nil)
 }
 
@@ -187,12 +182,11 @@ func run(ctx context.Context, nctx engine.NativeContext,
 	ctx, stop := signal.NotifyContext(ctx, syscall.SIGINT, syscall.SIGTERM)
 	defer stop()
 
+	var tgt string
 	if target != nil {
-		fmt.Fprintf(nctx.Stdout, "laz: tunnel -> %s\n", target())
+		tgt = target()
 	}
-	if ttl > 0 {
-		fmt.Fprintf(nctx.Stdout, "laz: ttl %s\n", ttl)
-	}
+	printBanner(nctx.Stdout, cc, tgt, nctx.Args["ttl"])
 	return frpc.Run(ctx, bin, doc, ttl)
 }
 
