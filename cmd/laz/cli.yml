@@ -48,3 +48,10 @@ version:
   desc: Show version
   color: white
   native: true
+
+completion:
+  desc: Print shell completion script (bash, zsh, fish)
+  color: white
+  native: true
+  args:
+  - shell:str

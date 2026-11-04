@@ -26,12 +26,17 @@ func main() {
 	builder.RegisterNative("udp", runUDP)
 	builder.RegisterNative("frpc", runFRPCFetch)
 	builder.RegisterNative("version", showVersion)
+	builder.RegisterNative("completion", runCompletion)
 	builder.WithOptions(engine.Options{AutoHelp: true})
 
 	app, err := builder.Build()
 	if err != nil {
 		fmt.Fprintln(os.Stderr, "laz:", err)
 		os.Exit(1)
+	}
+
+	if handleCompletion(app, os.Stdout, os.Args[1:]) {
+		return
 	}
 
 	if err := app.Run(context.Background(), os.Args[1:]); err != nil {
