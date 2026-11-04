@@ -8,7 +8,12 @@ laz http 3000 --subdomain myapp        # https://myapp.your-frps-domain
 laz tcp 22 --remote 2222               # ssh via tunnel.example.com:2222
 laz udp 19132                          # game server
 laz http 3000 --ttl 1h                 # dies on its own after an hour
+laz http 3000 -s myapp --render > frpc.toml   # config only, no tunnel
 ```
+
+`--render` prints the generated `frpc.toml` to stdout instead of running
+`frpc` — handy for long-lived tunnels managed by systemd or Docker
+(`docker run -v ./frpc.toml:/etc/frp/frpc.toml fatedier/frpc`).
 
 ## Install
 

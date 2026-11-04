@@ -162,12 +162,18 @@ func run(ctx context.Context, nctx engine.NativeContext,
 	if err != nil {
 		return err
 	}
-	bin, err := frpc.Ensure("")
+	cc.Server, cc.Token, cc.Transport = cfg.Server, cfg.Token, cfg.Transport
+	doc, err := frpc.Render(cc, cfg.DefaultServerPort)
 	if err != nil {
 		return err
 	}
-	cc.Server, cc.Token, cc.Transport = cfg.Server, cfg.Token, cfg.Transport
-	doc, err := frpc.Render(cc, cfg.DefaultServerPort)
+
+	if nctx.Args["render"] == "true" {
+		_, err := nctx.Stdout.Write(doc)
+		return err
+	}
+
+	bin, err := frpc.Ensure("")
 	if err != nil {
 		return err
 	}
