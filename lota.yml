@@ -25,8 +25,11 @@ dev:
 push:
   desc: Push to GitHub
   args:
-  - tag|t:str?
+  - tag:str?
   script: |
     set -euo pipefail
     git push
-    [ -n "${tag:-}" ] && git push -f origin "$tag" || true
+    if [ -n "${tag:-}" ]; then
+      git tag -f "$tag"
+      git push -f origin "$tag"
+    fi

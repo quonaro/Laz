@@ -49,7 +49,7 @@ func rawProxy(typ string, nctx engine.NativeContext) frpc.Proxy {
 }
 
 func run(ctx context.Context, nctx engine.NativeContext, p frpc.Proxy) error {
-	cfg, err := config.Load(nctx.Args["server"], nctx.Args["token"])
+	cfg, err := config.Load(nctx.Args["server"], nctx.Args["token"], nctx.Args["transport"])
 	if err != nil {
 		return err
 	}

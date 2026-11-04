@@ -7,8 +7,9 @@ http:
   - subdomain|s:str?
   - host|H:str=127.0.0.1
   - ttl|t:str?
-  - server:str?
-  - token:str?
+  - server|S:str?
+  - transport|p:str?
+  - token|T:str?
 
 tcp:
   desc: Expose a local TCP port on a remote port
@@ -19,8 +20,9 @@ tcp:
   - remote|r:int?
   - host|H:str=127.0.0.1
   - ttl|t:str?
-  - server:str?
-  - token:str?
+  - server|S:str?
+  - transport|p:str?
+  - token|T:str?
 
 udp:
   desc: Expose a local UDP port on a remote port
@@ -31,8 +33,9 @@ udp:
   - remote|r:int?
   - host|H:str=127.0.0.1
   - ttl|t:str?
-  - server:str?
-  - token:str?
+  - server|S:str?
+  - transport|p:str?
+  - token|T:str?
 
 frpc:
   desc: Download or update the pinned frpc binary

@@ -25,7 +25,7 @@ type Config struct {
 
 // Load merges the optional flag overrides with the environment and the
 // config file (~/.config/laz/config.yaml, then ./laz.yaml).
-func Load(flagServer, flagToken string) (*Config, error) {
+func Load(flagServer, flagToken, flagTransport string) (*Config, error) {
 	cfg := &Config{
 		Server:            os.Getenv("LAZ_SERVER"),
 		Token:             os.Getenv("LAZ_TOKEN"),
@@ -42,6 +42,9 @@ func Load(flagServer, flagToken string) (*Config, error) {
 	}
 	if flagToken != "" {
 		cfg.Token = flagToken
+	}
+	if flagTransport != "" {
+		cfg.Transport = flagTransport
 	}
 	if cfg.Server == "" {
 		return nil, fmt.Errorf("no server configured: pass --server, set LAZ_SERVER, or write ~/.config/laz/config.yaml")
