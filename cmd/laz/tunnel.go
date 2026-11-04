@@ -56,7 +56,7 @@ func runRaw(ctx context.Context, nctx engine.NativeContext, typ string) error {
 		if isRange(port) {
 			return fmt.Errorf("port range needs an explicit --remote range")
 		}
-		remote = fmt.Sprint(30000 + randInt(30000))
+		remote = fmt.Sprint(40000 + randInt(101))
 	}
 	p := frpc.Proxy{
 		Name: argOr(nctx.Args["name"], fmt.Sprintf("laz-%s-%s", typ, port)),
@@ -139,7 +139,7 @@ func runDir(ctx context.Context, nctx engine.NativeContext) error {
 func runSocks(ctx context.Context, nctx engine.NativeContext) error {
 	remote := nctx.Args["remote"]
 	if remote == "" {
-		remote = fmt.Sprint(30000 + randInt(30000))
+		remote = fmt.Sprint(40000 + randInt(101))
 	}
 	p := frpc.Proxy{
 		Name: "laz-socks", Type: "tcp", RemotePort: remote,

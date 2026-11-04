@@ -22,6 +22,19 @@ dev:
   desc: Run laz from source
   script: go run ./cmd/laz
 
+test:
+  desc: Run tests
+  script: go test ./...
+
+check:
+  desc: Format check + build + vet + test (same as pre-commit)
+  script: |
+    set -euo pipefail
+    test -z "$(gofmt -l .)"
+    go build ./...
+    go vet ./...
+    go test ./...
+
 push:
   desc: Push to GitHub
   args:

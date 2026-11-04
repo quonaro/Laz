@@ -27,10 +27,9 @@ type Config struct {
 // config file (~/.config/laz/config.yaml, then ./laz.yaml).
 func Load(flagServer, flagToken, flagTransport string) (*Config, error) {
 	cfg := &Config{
-		Server:            os.Getenv("LAZ_SERVER"),
-		Token:             os.Getenv("LAZ_TOKEN"),
-		Transport:         os.Getenv("LAZ_TRANSPORT"),
-		DefaultServerPort: 7000,
+		Server:    os.Getenv("LAZ_SERVER"),
+		Token:     os.Getenv("LAZ_TOKEN"),
+		Transport: os.Getenv("LAZ_TRANSPORT"),
 	}
 	if fileCfg, err := loadFile(); err != nil {
 		return nil, err
