@@ -10,28 +10,128 @@ http:
   - server|S:str?
   - transport|p:str?
   - token|T:str?
+  - name|n:str?
+  - encrypt|e:bool=false
+  - compress|c:bool=false
+  - bandwidth|B:str?
 
-tcp:
-  desc: Expose a local TCP port on a remote port
+https:
+  desc: Expose a local HTTPS service (needs vhostHTTPSPort on frps)
   color: green
   native: true
   args:
   - port:int
-  - remote|r:int?
+  - subdomain|s:str?
   - host|H:str=127.0.0.1
   - ttl|t:str?
   - server|S:str?
   - transport|p:str?
   - token|T:str?
+  - name|n:str?
+  - encrypt|e:bool=false
+  - compress|c:bool=false
+  - bandwidth|B:str?
+
+tcp:
+  desc: Expose local TCP port(s) on remote port(s); ranges ok (8000-8010)
+  color: green
+  native: true
+  args:
+  - port:str
+  - remote|r:str?
+  - host|H:str=127.0.0.1
+  - ttl|t:str?
+  - server|S:str?
+  - transport|p:str?
+  - token|T:str?
+  - name|n:str?
+  - encrypt|e:bool=false
+  - compress|c:bool=false
+  - bandwidth|B:str?
 
 udp:
-  desc: Expose a local UDP port on a remote port
+  desc: Expose local UDP port(s) on remote port(s); ranges ok
+  color: green
+  native: true
+  args:
+  - port:str
+  - remote|r:str?
+  - host|H:str=127.0.0.1
+  - ttl|t:str?
+  - server|S:str?
+  - transport|p:str?
+  - token|T:str?
+  - name|n:str?
+  - encrypt|e:bool=false
+  - compress|c:bool=false
+  - bandwidth|B:str?
+
+share:
+  desc: Open a private tunnel reachable only via matching 'laz visit'
   color: green
   native: true
   args:
   - port:int
+  - type|y:str=tcp
+  - key|k:str?
+  - name|n:str?
+  - ttl|t:str?
+  - server|S:str?
+  - transport|p:str?
+  - token|T:str?
+  - encrypt|e:bool=false
+  - compress|c:bool=false
+  - bandwidth|B:str?
+
+visit:
+  desc: Connect to a private share (peer of 'laz share')
+  color: green
+  native: true
+  args:
+  - name:str
+  - key|k:str
+  - type|y:str=stcp
+  - bind|b:str?
+  - ttl|t:str?
+  - server|S:str?
+  - transport|p:str?
+  - token|T:str?
+
+xtcp:
+  desc: Open a P2P tunnel (NAT hole-punching, no relay traffic)
+  color: green
+  native: true
+  args:
+  - port:int
+  - key|k:str?
+  - name|n:str?
+  - ttl|t:str?
+  - server|S:str?
+  - transport|p:str?
+  - token|T:str?
+
+dir:
+  desc: Serve a local directory over HTTPS on a subdomain
+  color: green
+  native: true
+  args:
+  - path:str
+  - subdomain|s:str?
+  - user|u:str?
+  - pass|P:str?
+  - ttl|t:str?
+  - server|S:str?
+  - transport|p:str?
+  - token|T:str?
+
+socks:
+  desc: Run a SOCKS5 proxy on a remote port into this network
+  color: green
+  native: true
+  args:
   - remote|r:int?
-  - host|H:str=127.0.0.1
+  - user|u:str?
+  - pass|P:str?
   - ttl|t:str?
   - server|S:str?
   - transport|p:str?

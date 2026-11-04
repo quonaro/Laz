@@ -8,6 +8,7 @@ BIN_NAME="${BIN_NAME:-laz}"
 INSTALL_DIR="${INSTALL_DIR:-$HOME/.local/bin}"
 FRP_VERSION="${FRP_VERSION:-0.71.1}"
 WITH_FRPC="${WITH_FRPC:-1}"
+WITH_COMPLETION="${WITH_COMPLETION:-1}"
 
 if [ -t 1 ]; then
 	GREEN='\033[0;32m' YELLOW='\033[1;33m' RED='\033[0;31m' NC='\033[0m'
@@ -56,6 +57,30 @@ if [ "$WITH_FRPC" = "1" ] && ! command -v frpc >/dev/null 2>&1; then
 		|| die "could not download frp release"
 	tar xzf "$TMP/frp.tar.gz" -C "$TMP"
 	install -m 755 "$TMP/frp_${FRP_VERSION}_${OS}_${ARCH}/frpc" "$INSTALL_DIR/frpc"
+fi
+
+install_completion() { # <shell>
+	case "$1" in
+	fish)
+		dir="$HOME/.config/fish/completions"
+		mkdir -p "$dir" \
+			&& "$INSTALL_DIR/laz" completion fish > "$dir/laz.fish" \
+			&& info "completion: $dir/laz.fish"
+		;;
+	bash|zsh)
+		rc="$HOME/.$1rc"
+		line='command -v laz >/dev/null 2>&1 && eval "$(laz completion '"$1"')"'
+		[ "$1" = zsh ] && line='command -v laz >/dev/null 2>&1 && { autoload -Uz compinit && compinit; eval "$(laz completion zsh)"; }'
+		if ! grep -qF 'laz completion' "$rc" 2>/dev/null; then
+			printf '\n# laz shell completion\n%s\n' "$line" >> "$rc" \
+				&& info "completion: appended to $rc (restart shell)"
+		fi
+		;;
+	esac
+}
+
+if [ "$WITH_COMPLETION" = "1" ]; then
+	install_completion "$(basename "${SHELL:-}")" || warn "completion install skipped"
 fi
 
 case ":$PATH:" in *":$INSTALL_DIR:"*) ;; *)

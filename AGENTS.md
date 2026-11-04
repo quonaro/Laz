@@ -18,7 +18,7 @@ go build ./... && go vet ./... && go test ./...
   handlers), same pattern as acp2api.
 - `cmd/laz/cli.yml` — command declarations (`http`, `tcp`, `udp`, `frpc`,
   `version`); `native: true` handlers.
-- `cmd/laz/tunnel.go` — native handlers: args → `frpc.Proxy` → render → run.
+- `cmd/laz/tunnel.go` — native handlers: args → `frpc.Proxy`/`Visitor` → render → run.
 - `internal/config` — server/token resolution: flag > env (`LAZ_*`) >
   `~/.config/laz/config.yaml` > `./laz.yaml`.
 - `internal/frpc` — `config.go` renders frpc.toml, `binary.go` locates or

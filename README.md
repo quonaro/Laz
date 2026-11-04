@@ -16,7 +16,9 @@ laz http 3000 --ttl 1h                 # dies on its own after an hour
 curl -fsSL https://raw.githubusercontent.com/quonaro/Laz/main/public/install.sh | sh
 ```
 
-Installs `laz` (and `frpc`, if missing) into `~/.local/bin`.
+Installs `laz` (and `frpc`, if missing) into `~/.local/bin`, plus shell
+completion for bash/zsh/fish (`WITH_COMPLETION=0` to skip). Manual:
+`laz completion <shell>`.
 
 ## Configure
 
