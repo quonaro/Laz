@@ -37,7 +37,7 @@ func runVhost(ctx context.Context, nctx engine.NativeContext, typ string) error 
 	applyCommon(&p, nctx)
 	return run(ctx, nctx, frpc.ClientConfig{Proxies: []frpc.Proxy{p}},
 		func() string {
-			return fmt.Sprintf("%s.loc.rest", p.Subdomain)
+			return fmt.Sprintf("https://%s.loc.rest", p.Subdomain)
 		})
 }
 

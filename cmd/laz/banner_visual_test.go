@@ -15,7 +15,7 @@ func TestBannerVisual(t *testing.T) {
 			LocalIP: "127.0.0.1", LocalPort: "3000",
 			Subdomain: "my-api",
 		}},
-	}, "my-api.loc.rest", "1h")
+	}, "https://my-api.loc.rest", "1h")
 
 	printBanner(os.Stdout, frpc.ClientConfig{
 		Server: "frp.example.com:7000", Transport: "quic",
